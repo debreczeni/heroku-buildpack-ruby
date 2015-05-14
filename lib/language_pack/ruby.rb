@@ -512,8 +512,10 @@ WARNING
       log("bundle") do
         bundle_without = env("BUNDLE_WITHOUT") || "development:test"
         bundle_bin     = "bundle"
-        bundle_command = "#{bundle_bin} install --without #{bundle_without} --path vendor/bundle --binstubs #{bundler_binstubs_path}"
+        bundle_command = 'DEBUG_RESOLVER=1 DEBUG=1'
+        bundle_command << " #{bundle_bin} install --without #{bundle_without} --path vendor/bundle --binstubs #{bundler_binstubs_path}"
         bundle_command << " -j4"
+        bundle_command << " --verbose"
 
         if bundler.windows_gemfile_lock?
           warn(<<WARNING, inline: true)
